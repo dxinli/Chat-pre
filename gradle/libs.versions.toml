@@ -1,0 +1,38 @@
+# Version catalog is a central place for you to declare and version dependencies
+# https://docs.gradle.org/current/userguide/platforms.html#sub:version-catalog
+# https://docs.gradle.org/current/userguide/platforms.html#sub::toml-dependencies-format
+
+[versions]
+kotlin = "2.1.10"
+kotlinxDatetime = "0.6.1"
+kotlinxSerialization = "1.7.2"
+kotlinxCoroutines = "1.8.1"
+springBoot = "3.4.3"
+rsocketVersion="0.20.0"
+
+[libraries]
+kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+springBootGradlePlugin = { module = "org.springframework.boot:org.springframework.boot.gradle.plugin", version.ref = "springBoot" }
+springDependencyManagement = { module = "io.spring.dependency-management:io.spring.dependency-management.gradle.plugin", version = "1.1.7" }
+kotlin-spring = { module = "org.jetbrains.kotlin.plugin.spring:org.jetbrains.kotlin.plugin.spring.gradle.plugin", version.ref = "kotlin" }
+
+
+kotlinxDatetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-serialization-Json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-Protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinxSerialization" }
+kotlinxCoroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+
+rsocket-core = { module = "io.rsocket.kotlin:rsocket-core", version.ref = "rsocketVersion" }
+
+spring-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux"  }
+spring-data-r2dbc = { module = "org.springframework.boot:spring-boot-starter-data-r2dbc"}
+spring-rsocket = { module = "org.springframework.boot:spring-boot-starter-rsocket"}
+
+# Libraries can be bundled together for easier import
+[bundles]
+kotlinxEcosystem = ["kotlinxDatetime", "kotlinx-serialization-Protobuf", "kotlinxCoroutines"]
+springEcosystem = ["springBootGradlePlugin","springDependencyManagement","kotlin-spring"]
+springReactiveEcosystem = ["spring-webflux","spring-data-r2dbc","spring-rsocket"]
+
+[plugins]
+kotlinPluginSerialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }

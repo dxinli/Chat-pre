@@ -1,0 +1,30 @@
+spring:
+  application:
+    name: userService
+
+  r2dbc:
+    url: r2dbc:postgresql://localhost:5432/chat_db?currentSchema=chat
+    username: sakura
+    password: sakura
+    pool:
+      initial-size: 5
+      max-size: 20
+      max-idle-time: 30m
+
+  flyway:
+    schemas: chat  # 指定迁移目标 Schema
+    default-schema: chat
+    placeholders:
+      schema: chat  # 允许在 SQL 中使用占位符 `${schema}`
+    url: jdbc:postgresql://localhost:5432/chat_db
+    user: sakura
+    password: sakura
+    locations: classpath:db/migration
+    baseline-on-migrate: true  # 首次运行时自动创建基线版本
+    validate-on-migrate: false
+
+  rsocket:
+    server:
+      transport: websocket
+      mapping-path: /rsocket
+      port: 8081
