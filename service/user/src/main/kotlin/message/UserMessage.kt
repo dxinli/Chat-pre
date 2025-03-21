@@ -1,13 +1,17 @@
 package iuo.zmua.user.message
 
 import iuo.zmua.api.User
-import iuo.zmua.api.UserApi
+import iuo.zmua.api.UserServer
 import org.springframework.stereotype.Controller
 
 @Controller
-class UserMessage : UserApi{
+class UserMessage : UserServer {
 
-    override suspend fun getMe(): User = User(1,"yangqiyu")
+    override suspend fun getMe(): User {
+        val user = User(1, "yangqiyu")
+        println(user)
+        return user
+    }
 
     override suspend fun deleteMe() {
         TODO("Not yet implemented")
