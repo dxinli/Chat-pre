@@ -7,7 +7,15 @@ dependencyResolutionManagement {
     // Use Maven Central as the default repository (where Gradle will download dependencies) in all subprojects.
     @Suppress("UnstableApiUsage")
     repositories {
+//        maven { url = uri("https://maven.aliyun.com/repository/public") }
         mavenCentral()
+    }
+}
+
+pluginManagement {
+    repositories {
+        maven { url = uri("https://maven.aliyun.com/repository/public") }
+        gradlePluginPortal()
     }
 }
 

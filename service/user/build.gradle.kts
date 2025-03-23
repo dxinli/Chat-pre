@@ -4,6 +4,7 @@ plugins {
 
 dependencies {
     implementation(libs.bundles.springReactiveEcosystem)
+    implementation(libs.kotlinx.serialization.protobuf)
     implementation(project(":api"))
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     runtimeOnly("org.postgresql:r2dbc-postgresql")
@@ -13,4 +14,6 @@ dependencies {
     implementation("com.github.f4b6a3:ulid-creator:5.2.3")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
+
+    api(libs.rsocket.core)
 }

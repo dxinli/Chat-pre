@@ -28,13 +28,7 @@ kotlin {
         }
 
         jvmMain.dependencies {
-            api("org.springframework:spring-messaging:6.2.4")
+            api("org.springframework:spring-messaging:6.2.3")
         }
     }
 }
-
-//dependencies {
-//    implementation(libs.rsocket.core)
-//    implementation(libs.kotlinx.serialization.json)
-//    implementation("org.springframework:spring-messaging:6.2.4")
-//}

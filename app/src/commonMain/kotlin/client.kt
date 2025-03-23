@@ -1,13 +1,24 @@
 package iuo.zmua.client
 
+import io.ktor.client.*
 import io.ktor.client.engine.cio.*
+import io.ktor.client.plugins.websocket.*
+import io.ktor.client.request.*
+import io.ktor.http.cio.ConnectionOptions.Companion.KeepAlive
 import io.rsocket.kotlin.RSocket
+import io.rsocket.kotlin.RSocketRequestHandler
 import io.rsocket.kotlin.core.RSocketConnector
+import io.rsocket.kotlin.core.WellKnownMimeType
+//import io.rsocket.kotlin.keepalive.KeepAlive
+//import io.rsocket.kotlin.ktor.client.RSocketSupport
+//import io.rsocket.kotlin.ktor.client.rSocket
+import io.rsocket.kotlin.payload.PayloadMimeType
 import io.rsocket.kotlin.payload.buildPayload
 import io.rsocket.kotlin.payload.data
 import io.rsocket.kotlin.transport.ktor.tcp.KtorTcpClientTransport
 import io.rsocket.kotlin.transport.ktor.websocket.client.KtorWebSocketClientTransport
 import iuo.zmua.api.utils.ConfiguredProtoBuf
+import kotlinx.coroutines.GlobalScope.coroutineContext
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -66,16 +77,35 @@ private suspend fun ApiClient(
     val connector = RSocketConnector {
         connectionConfig {
             setupPayload { buildPayload { data(name) } }
+            //mime types
+            payloadMimeType = PayloadMimeType(
+                data = WellKnownMimeType.ApplicationJson,
+                metadata = WellKnownMimeType.MessageRSocketRouting
+            )
         }
     }
 
-    val target = when (address.type) {
-        TransportType.TCP -> KtorTcpClientTransport(context).target(host = "localhost", port = address.port)
-        TransportType.WS  -> KtorWebSocketClientTransport(context) {
-            httpEngine(CIO)
-        }.target(host = "localhost", port = address.port)
-    }
-
-
-    return ApiClient(connector.connect(target))
+    val target =  KtorWebSocketClientTransport(context) {
+        httpEngine(CIO)
+    }.target(host = "localhost", port = address.port,path = "/rsocket")
+//    val client = HttpClient {
+//        install(WebSockets) // rsocket requires websockets plugin installed
+//        install(RSocketSupport) {
+//            // configure rSocket connector (all values have defaults)
+//            connector {
+//                connectionConfig {
+//                    // payload for setup frame
+//                    setupPayload { buildPayload { data(name) } }
+//                    // mime types
+//                    payloadMimeType = PayloadMimeType(
+//                        data = WellKnownMimeType.ApplicationJson,
+//                        metadata = WellKnownMimeType.MessageRSocketRouting
+//                    )
+//                }
+//            }
+//        }
+//    }
+//    val rSocket = client.rSocket("localhost",8087,"/rsocket")
+    val rSocket = connector.connect(target)
+    return ApiClient(rSocket)
 }
