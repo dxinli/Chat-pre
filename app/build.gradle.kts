@@ -26,7 +26,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.rsocket.kotlin:rsocket-ktor-client:0.20.0")
+                implementation("io.rsocket.kotlin:ktor-client-rsocket:0.20.0")
                 implementation(project(":api"))
                 implementation("io.ktor:ktor-client-cio:3.1.1")
                 implementation("io.rsocket.kotlin:rsocket-transport-ktor-tcp:0.20.0")
