@@ -28,9 +28,13 @@ kotlin {
             dependencies {
                 implementation("io.rsocket.kotlin:ktor-client-rsocket:0.20.0")
                 implementation(project(":api"))
+                implementation(project(":kit"))
                 implementation("io.ktor:ktor-client-cio:3.1.1")
                 implementation("io.rsocket.kotlin:rsocket-transport-ktor-tcp:0.20.0")
                 implementation("io.rsocket.kotlin:rsocket-transport-ktor-websocket-client:0.20.0")
+                implementation(libs.kotlinxCoroutines)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(libs.koin.core)
             }
         }
         val commonTest by getting

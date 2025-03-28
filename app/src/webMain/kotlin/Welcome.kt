@@ -3,12 +3,6 @@ import csstype.rgb
 import react.FC
 import react.Props
 import emotion.react.css
-import iuo.zmua.client.Servers
-import iuo.zmua.client.runClient
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.launch
 import react.dom.html.InputType
 import react.dom.html.ReactHTML.button
 import react.dom.html.ReactHTML.div
@@ -49,9 +43,6 @@ val Welcome = FC<WelcomeProps> { props ->
         }
         +"Click me"
         onClick = {
-            GlobalScope.launch(SupervisorJob()) {
-                runClient(Servers.ALL,"YQY","JS")
-            }
         }
     }
 }

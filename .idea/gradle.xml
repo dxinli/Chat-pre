@@ -23,9 +23,9 @@
             <option value="$PROJECT_DIR$/api" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/buildSrc" />
+            <option value="$PROJECT_DIR$/kit" />
             <option value="$PROJECT_DIR$/service" />
             <option value="$PROJECT_DIR$/service/user" />
-            <option value="$PROJECT_DIR$/utils" />
           </set>
         </option>
       </GradleProjectSettings>

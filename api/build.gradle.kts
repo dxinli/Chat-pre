@@ -5,6 +5,10 @@ plugins {
     alias(libs.plugins.kotlinPluginSerialization)
 }
 
+repositories {
+    mavenCentral()
+}
+
 kotlin {
     jvm()
     js {
@@ -25,6 +29,8 @@ kotlin {
             api(libs.rsocket.core)
             api(libs.kotlinx.serialization.json)
             api(libs.kotlinx.serialization.protobuf)
+            implementation("com.squareup.okio:okio:3.10.2")
+            api(libs.kotlinx.serialization.properties)
         }
 
         jvmMain.dependencies {

@@ -1,0 +1,9 @@
+rsocket:
+  transportType: WS
+  target:
+    host: localhost
+    port: 8080
+    path: /rsocket
+  connector:
+    dataMimeType: WellKnownMimeType.ApplicationProtoBuf
+    metadataMimeType: WellKnownMimeType.MessageRSocketCompositeMetadata

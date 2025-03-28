@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="kit-jvm">
+    <output-path>$PROJECT_DIR$/kit/build/libs</output-path>
+    <root id="archive" name="kit-jvm.jar">
+      <element id="module-output" name="Chat-pre.kit.jvmMain" />
+    </root>
+  </artifact>
+</component>

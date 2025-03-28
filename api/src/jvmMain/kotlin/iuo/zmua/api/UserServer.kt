@@ -3,7 +3,7 @@ package iuo.zmua.api
 import org.springframework.messaging.rsocket.service.RSocketExchange
 
 @RSocketExchange("api.v1.user")
-interface UserServer : UserApi{
+interface UserServer : UserApi {
 
     @RSocketExchange("getMe")
     override suspend fun getMe(): User

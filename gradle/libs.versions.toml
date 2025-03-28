@@ -9,9 +9,13 @@ kotlinxSerialization = "1.7.2"
 kotlinxCoroutines = "1.8.1"
 springBoot = "3.4.3"
 rsocketVersion="0.20.0"
+koin-bom="4.0.3"
+kotlinx-rpc = "0.5.1"
+ktor = "3.1.1"
 
 [libraries]
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib", version.ref = "kotlin" }
 springBootGradlePlugin = { module = "org.springframework.boot:org.springframework.boot.gradle.plugin", version.ref = "springBoot" }
 springDependencyManagement = { module = "io.spring.dependency-management:io.spring.dependency-management.gradle.plugin", version = "1.1.7" }
 kotlin-spring = { module = "org.jetbrains.kotlin.plugin.spring:org.jetbrains.kotlin.plugin.spring.gradle.plugin", version.ref = "kotlin" }
@@ -20,6 +24,7 @@ kotlin-spring = { module = "org.jetbrains.kotlin.plugin.spring:org.jetbrains.kot
 kotlinxDatetime = { module = "org.jetbrains.kotlinx:kotlinx-datetime", version.ref = "kotlinxDatetime" }
 kotlinx-serialization-Json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 kotlinx-serialization-Protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinxSerialization" }
+kotlinx-serialization-Properties = { module = "org.jetbrains.kotlinx:kotlinx-serialization-properties", version.ref = "kotlinxSerialization" }
 kotlinxCoroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
 
 rsocket-core = { module = "io.rsocket.kotlin:rsocket-core", version.ref = "rsocketVersion" }
@@ -27,6 +32,14 @@ rsocket-core = { module = "io.rsocket.kotlin:rsocket-core", version.ref = "rsock
 spring-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux"  }
 spring-data-r2dbc = { module = "org.springframework.boot:spring-boot-starter-data-r2dbc"}
 spring-rsocket = { module = "org.springframework.boot:spring-boot-starter-rsocket"}
+
+koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
+koin-core = { module = "io.insert-koin:koin-core" }
+
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+kotlinx-rpc-core = { module = "org.jetbrains.kotlinx:kotlinx-rpc-core", version.ref = "kotlinx-rpc" }
+kotlinx-rpc-krpc-ktor-client = { module = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-client", version.ref = "kotlinx-rpc" }
+kotlinx-rpc-krpc-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-serialization-json", version.ref = "kotlinx-rpc" }
 
 # Libraries can be bundled together for easier import
 [bundles]
