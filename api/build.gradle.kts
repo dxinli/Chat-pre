@@ -26,11 +26,10 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(libs.rsocket.core)
+            api(project(":kit"))
             api(libs.kotlinx.serialization.json)
             api(libs.kotlinx.serialization.protobuf)
-            implementation("com.squareup.okio:okio:3.10.2")
-            api(libs.kotlinx.serialization.properties)
+            api(libs.rsocket.core)
         }
 
         jvmMain.dependencies {

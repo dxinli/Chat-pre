@@ -1,10 +1,12 @@
 package iuo.zmua.app.extensions
 
 import iuo.zmua.app.ApiClient
-import iuo.zmua.kit.Payload
+import iuo.zmua.util.Payload
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import kotlinx.serialization.ExperimentalSerializationApi
+import iuo.zmua.util.decodeFromPayload
+import iuo.zmua.util.encodeToPayload
 
 @OptIn(ExperimentalSerializationApi::class)
 suspend inline fun <reified O> ApiClient.requestResponse(route: String, vararg data: Any): O =

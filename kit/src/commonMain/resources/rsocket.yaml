@@ -1,4 +1,4 @@
-rsocket:
+rSocket:
   transportType: WS
   target:
     host: localhost
