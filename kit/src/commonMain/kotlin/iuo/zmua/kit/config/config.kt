@@ -41,17 +41,19 @@ data class RSocketConnectorConfig(
 suspend fun configLoad():Config {
     println("consul config load")
     val res = httpClient.post(EtcdApi.KV.Range()){
-        contentType(ContentType.Application.Json)
-        setBody{
-            "key" to "rSocket"
+        url{
+           host = "localhost"
+           port = 2380
         }
+        contentType(ContentType.Application.Json)
+        setBody(mapOf("key" to "rSocket"))
     }
     if (res.status.value in 200..299) {
         val configStr = res.body<String>()
         println(configStr)
         return Config()
     }
-    throw Exception("consul config load error")
+    throw Exception("etcd config load error")
 }
 
 suspend fun main() {
