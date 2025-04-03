@@ -1,14 +1,20 @@
 package iuo.zmua.app.koin
 
+import iuo.zmua.app.apiClient
+import iuo.zmua.app.message.UserClient
+import iuo.zmua.kit.config.RSocketConfig
+import iuo.zmua.kit.config.configLoad
 import org.koin.core.context.startKoin
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
-val config = module {}
-
-val client = module {}
-
-fun setUp(vararg modules: Module) = startKoin {
-    // declare used modules
-    modules(config,*modules)
+suspend fun setUp(vararg modules: Module) {
+    val rSocketConfig = configLoad("rSocket")?:RSocketConfig()
+    val apiClient = apiClient(rSocketConfig)
+    startKoin {
+        module {
+            single { apiClient }
+            single { UserClient(get()) }
+        }
+    }
 }

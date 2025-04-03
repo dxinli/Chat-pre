@@ -3,18 +3,15 @@ package iuo.zmua.app
 import io.ktor.client.*
 import io.ktor.client.plugins.websocket.*
 import io.rsocket.kotlin.RSocket
-import io.rsocket.kotlin.core.WellKnownMimeType
 import io.rsocket.kotlin.ktor.client.RSocketSupport
 import io.rsocket.kotlin.ktor.client.rSocket
 import io.rsocket.kotlin.payload.PayloadMimeType
 import io.rsocket.kotlin.payload.buildPayload
 import io.rsocket.kotlin.payload.data
 import iuo.zmua.kit.config.RSocketConfig
-import iuo.zmua.util.Serializer
+import iuo.zmua.codec.Codec
 
-suspend fun ApiClient(
-    config: RSocketConfig,
-):ApiClient {
+suspend fun apiClient(config: RSocketConfig):ApiClient {
     val client = HttpClient {
         install(WebSockets) // rsocket requires websockets plugin installed
         install(RSocketSupport) {
@@ -32,13 +29,14 @@ suspend fun ApiClient(
             }
         }
     }
+
     val rSocket = client.rSocket(config.target.host,config.target.port,config.target.path)
-    return ApiClient(rSocket, Serializer(WellKnownMimeType.ApplicationProtoBuf))
+    return ApiClient(rSocket, Codec(config.connector.dataMimeType))
 }
 
-// 将发送消息的方法委托给 rSocket，并将 serialization 暴露
-class ApiClient(
-    val rSocket: RSocket, val serialization: Serializer
+// 将发送消息的方法委托给 rSocket，并将 codec 暴露
+class ApiClient internal constructor(
+    val rSocket: RSocket, val codec: Codec
 ): RSocket by rSocket
 
 

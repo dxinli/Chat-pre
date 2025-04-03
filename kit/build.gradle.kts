@@ -33,11 +33,13 @@ kotlin {
             api(libs.ktor.client.core)
             api(libs.kotlinx.serialization.json)
             api(libs.kotlinx.serialization.protobuf)
+            implementation(libs.kotlinxCoroutines)
             implementation("io.ktor:ktor-client-content-negotiation:3.1.1")
             implementation("io.ktor:ktor-serialization-kotlinx-json:3.1.1")
             implementation("io.ktor:ktor-serialization-kotlinx-protobuf:3.1.1")
             implementation("io.ktor:ktor-client-resources:3.1.1")
             implementation("io.ktor:ktor-client-cio:3.1.1")
+            implementation("com.squareup.okio:okio:3.10.2")
             api("com.charleskorn.kaml:kaml:0.73.0")
         }
         jvmMain.dependencies {

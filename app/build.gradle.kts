@@ -43,9 +43,14 @@ kotlin {
                 implementation("io.ktor:ktor-server-netty:2.3.2")
                 implementation("io.ktor:ktor-server-html-builder-jvm:2.3.2")
                 implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
             }
         }
-        val jvmTest by getting
+        val jvmTest by getting {
+            dependencies {
+                implementation(libs.kotlinxCoroutines)
+            }
+        }
         val webMain by getting {
             dependencies {
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react:18.2.0-pre.346")

@@ -15,4 +15,4 @@ val ConfiguredJson = Json {
     ignoreUnknownKeys = true
 }
 
-val ConfigYaml = Yaml.default
+val ConfiguredYaml = Yaml.default

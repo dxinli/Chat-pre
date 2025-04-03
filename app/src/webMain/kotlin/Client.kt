@@ -1,11 +1,15 @@
-import iuo.zmua.app.koin.client
 import iuo.zmua.app.koin.setUp
 import kotlinx.browser.document
+import kotlinx.coroutines.*
 import react.create
 import react.dom.client.createRoot
 
+val AppScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+
 fun main() {
-    setUp(client) // 设置 koin
+    AppScope.launch {
+        setUp() // 设置 koin
+    }
     val container = document.createElement("div")
     document.body!!.appendChild(container)
 

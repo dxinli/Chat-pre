@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="kit-wasm-js">
+    <output-path>$PROJECT_DIR$/kit/build/libs</output-path>
+    <root id="archive" name="kit-wasm-js.jar">
+      <element id="module-output" name="Chat-pre.kit.wasmJsMain" />
+    </root>
+  </artifact>
+</component>
