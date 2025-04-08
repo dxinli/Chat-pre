@@ -35,6 +35,7 @@ kotlin {
                 implementation(libs.kotlinxCoroutines)
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
+                implementation("org.kodein.di:kodein-di:7.25.0")
             }
         }
         val commonTest by getting
@@ -59,6 +60,8 @@ kotlin {
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom:6.3.0-pre.346")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-redux:4.1.2-pre.346")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-redux:7.2.6-pre.346")
+                implementation(libs.koin.core.js)
+                implementation("org.kodein.di:kodein-di-js:7.25.0")
             }
         }
         val webTest by getting

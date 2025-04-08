@@ -1,6 +1,11 @@
+import iuo.zmua.app.apiClient
 import iuo.zmua.app.koin.setUp
+import iuo.zmua.kit.config.RSocketConfig
+import iuo.zmua.kit.config.configLoad
 import kotlinx.browser.document
 import kotlinx.coroutines.*
+import org.kodein.di.DI
+import org.kodein.di.singleton
 import react.create
 import react.dom.client.createRoot
 

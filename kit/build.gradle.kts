@@ -15,9 +15,11 @@ kotlin {
         freeCompilerArgs.add("-Xexpect-actual-classes")
     }
     jvm()
-    js {
+    js(IR) {
         nodejs()
-        binaries.executable()
+        browser {
+            binaries.executable()
+        }
     }
     @OptIn(ExperimentalWasmDsl::class)
     wasmJs {
@@ -45,6 +47,11 @@ kotlin {
         jvmMain.dependencies {
             runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:2.1.10")
             implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.18.3")
+        }
+        jsMain.dependencies {
+            implementation("io.ktor:ktor-client-content-negotiation-js:3.1.1")
+            implementation("io.ktor:ktor-client-js:3.1.1")
+            implementation("io.ktor:ktor-serialization-kotlinx-json-js:3.1.1")
         }
     }
 }
