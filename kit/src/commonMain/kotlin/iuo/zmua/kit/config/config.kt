@@ -40,7 +40,7 @@ data class RSocketConnectorConfig(
 )
 
 @OptIn(ExperimentalEncodingApi::class)
-suspend inline fun <reified T> configLoad(keyStr: String):T? {
+suspend inline fun <reified T> configLoad(keyStr: String):T{
     println("etcd config load")
     val key = Base64.encode(keyStr.encodeToByteArray())
     val res = httpClient.post(EtcdApi.KV.Range()){
@@ -60,7 +60,7 @@ suspend inline fun <reified T> configLoad(keyStr: String):T? {
                 return ConfiguredYaml.decodeFromSource(Buffer().write(base64))
             }
         }
-        return null
+        throw Exception("etcd config unknown key")
     }
     throw Exception("etcd config load error")
 }

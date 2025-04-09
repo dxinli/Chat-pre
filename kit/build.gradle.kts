@@ -52,6 +52,7 @@ kotlin {
             implementation("io.ktor:ktor-client-content-negotiation-js:3.1.1")
             implementation("io.ktor:ktor-client-js:3.1.1")
             implementation("io.ktor:ktor-serialization-kotlinx-json-js:3.1.1")
+            implementation("io.ktor:ktor-client-resources-js:3.1.1")
         }
     }
 }

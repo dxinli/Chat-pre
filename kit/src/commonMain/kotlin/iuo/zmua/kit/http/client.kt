@@ -6,7 +6,7 @@ import io.ktor.client.plugins.contentnegotiation.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.serialization.kotlinx.json.*
 
-val httpClient = HttpClient(CIO){
+val httpClient = HttpClient{
     install(ContentNegotiation) {
         json()
     }

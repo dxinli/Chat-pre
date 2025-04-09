@@ -16,8 +16,12 @@ external interface WelcomeProps : Props {
     var name: String
 }
 
+val userClient by lazy {
+    getKoin().get<UserClient>()
+}
+
 val Welcome = FC<WelcomeProps> { props ->
-    val userClient = getKoin().get<UserClient>()
+
     var name by useState(props.name)
     div {
         css {
