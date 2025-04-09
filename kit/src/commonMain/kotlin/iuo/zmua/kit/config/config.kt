@@ -3,6 +3,7 @@ package iuo.zmua.kit.config
 import io.ktor.client.call.*
 import io.ktor.client.plugins.resources.*
 import io.ktor.client.request.*
+import io.ktor.client.statement.*
 import io.ktor.http.*
 import io.rsocket.kotlin.core.WellKnownMimeType
 import iuo.zmua.kit.encoding.ConfiguredYaml
@@ -41,6 +42,21 @@ data class RSocketConnectorConfig(
 
 @OptIn(ExperimentalEncodingApi::class)
 suspend inline fun <reified T> configLoad(keyStr: String):T{
+    println("auth etcd")
+    val authRes = httpClient.post(EtcdApi.Auth.Login()) {
+        url {
+            host = "localhost"
+            port = 2379
+        }
+        contentType(ContentType.Application.Json)
+        setBody(mapOf("name" to "root", "password" to "sakura"))
+    }
+    if (!authRes.status.isSuccess()) {
+        throw Exception("etcd auth error, status: ${authRes.status},message:${authRes.body<String>()}")
+    }
+    val authJson = authRes.bodyAsText()
+    val token = authJson.substringAfter("\"token\":\"").substringBefore("\"")
+
     println("etcd config load")
     val key = Base64.encode(keyStr.encodeToByteArray())
     val res = httpClient.post(EtcdApi.KV.Range()){
@@ -48,11 +64,17 @@ suspend inline fun <reified T> configLoad(keyStr: String):T{
            host = "localhost"
            port = 2379
         }
+        headers {
+            append("Authorization", token)
+        }
+
         contentType(ContentType.Application.Json)
         setBody(mapOf("key" to key))
     }
     if (res.status.value in 200..299) {
+        println(res)
         val config = res.body<JsonObject>()
+        println(config)
         config["kvs"]?.let { jsonElement ->
             val value = jsonElement.jsonArray[0].jsonObject["value"]?.jsonPrimitive?.content
             value?.let {
@@ -60,7 +82,7 @@ suspend inline fun <reified T> configLoad(keyStr: String):T{
                 return ConfiguredYaml.decodeFromSource(Buffer().write(base64))
             }
         }
-        throw Exception("etcd config unknown key")
+        throw Exception("etcd config unknown key, key: $keyStr")
     }
-    throw Exception("etcd config load error")
+    throw Exception("etcd config load error , status: ${res.status},message:${res.body<String>()}")
 }

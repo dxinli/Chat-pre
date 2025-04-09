@@ -1,6 +1,5 @@
 plugins {
     kotlin("multiplatform")
-    application
 }
 
 repositories {
@@ -26,25 +25,24 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("io.rsocket.kotlin:ktor-client-rsocket:0.20.0")
+                implementation(libs.ktor.client.rsocket)
                 implementation(project(":api"))
                 implementation(project(":kit"))
-                implementation("io.ktor:ktor-client-cio:3.1.1")
-                implementation("io.rsocket.kotlin:rsocket-transport-ktor-tcp:0.20.0")
-                implementation("io.rsocket.kotlin:rsocket-transport-ktor-websocket-client:0.20.0")
+                implementation(libs.ktor.client.cio)
+                implementation(libs.rsocket.transport.ktor.tcp)
+                implementation(libs.rsocket.transport.ktor.websocket.client)
                 implementation(libs.kotlinxCoroutines)
                 implementation(project.dependencies.platform(libs.koin.bom))
                 implementation(libs.koin.core)
-                implementation("org.kodein.di:kodein-di:7.25.0")
             }
         }
         val commonTest by getting
         val jvmMain by getting {
             dependencies {
-                implementation("io.ktor:ktor-server-netty:2.3.2")
-                implementation("io.ktor:ktor-server-html-builder-jvm:2.3.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
-                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm")
+                implementation(libs.ktor.server.netty)
+                implementation(libs.ktor.server.html.builder.jvm)
+                implementation(libs.kotlinx.html.jvm)
+                implementation(libs.kotlinx.coroutines.core.jvm)
             }
         }
         val jvmTest by getting {
@@ -54,30 +52,20 @@ kotlin {
         }
         val webMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-react:18.2.0-pre.346")
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:18.2.0-pre.346")
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion:11.9.3-pre.346")
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom:6.3.0-pre.346")
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-redux:4.1.2-pre.346")
-                implementation("org.jetbrains.kotlin-wrappers:kotlin-react-redux:7.2.6-pre.346")
+                implementation(libs.kotlin.react)
+                implementation(libs.kotlin.react.dom)
+                implementation(libs.kotlin.emotion)
+                implementation(libs.kotlin.react.router.dom)
+                implementation(libs.kotlin.redux)
+                implementation(libs.kotlin.react.redux)
                 implementation(libs.koin.core.js)
-                implementation("org.kodein.di:kodein-di-js:7.25.0")
             }
         }
         val webTest by getting
     }
 }
 
-application {
-    mainClass.set("iuo.zmua.application.ServerKt")
-}
-
 tasks.named<Copy>("jvmProcessResources") {
     val webBrowserDistribution = tasks.named("webBrowserDistribution")
     from(webBrowserDistribution)
-}
-
-tasks.named<JavaExec>("run") {
-    dependsOn(tasks.named<Jar>("jvmJar"))
-    classpath(tasks.named<Jar>("jvmJar"))
 }

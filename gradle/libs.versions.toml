@@ -12,6 +12,7 @@ rsocketVersion="0.20.0"
 koin-bom="4.0.3"
 kotlinx-rpc = "0.5.1"
 ktor = "3.1.1"
+react = "18.2.0-pre.346"
 
 [libraries]
 kotlinGradlePlugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -26,8 +27,20 @@ kotlinx-serialization-Json = { module = "org.jetbrains.kotlinx:kotlinx-serializa
 kotlinx-serialization-Protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "kotlinxSerialization" }
 kotlinx-serialization-Properties = { module = "org.jetbrains.kotlinx:kotlinx-serialization-properties", version.ref = "kotlinxSerialization" }
 kotlinxCoroutines = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-html-jvm = { module = "org.jetbrains.kotlinx:kotlinx-html-jvm", version = "0.7.2" }
+kotlinx-coroutines-core-jvm = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core-jvm", version.ref = "kotlinxCoroutines" }
+
+kotlin-react = { module = "org.jetbrains.kotlin-wrappers:kotlin-react", version.ref = "react"  }
+kotlin-react-dom = { module = "org.jetbrains.kotlin-wrappers:kotlin-react-dom", version.ref = "react"  }
+kotlin-emotion = { module = "org.jetbrains.kotlin-wrappers:kotlin-emotion", version = "11.9.3-pre.346" }
+kotlin-react-router-dom = { module = "org.jetbrains.kotlin-wrappers:kotlin-react-router-dom", version = "6.3.0-pre.346" }
+kotlin-redux = { module = "org.jetbrains.kotlin-wrappers:kotlin-redux", version = "4.1.2-pre.346" }
+kotlin-react-redux = { module = "org.jetbrains.kotlin-wrappers:kotlin-react-redux", version = "7.2.6-pre.346" }
 
 rsocket-core = { module = "io.rsocket.kotlin:rsocket-core", version.ref = "rsocketVersion" }
+ktor-client-rsocket = { module = "io.rsocket.kotlin:ktor-client-rsocket", version.ref = "rsocketVersion" }
+rsocket-transport-ktor-tcp = { module = "io.rsocket.kotlin:rsocket-transport-ktor-tcp", version.ref = "rsocketVersion" }
+rsocket-transport-ktor-websocket-client = { module = "io.rsocket.kotlin:rsocket-transport-ktor-websocket-client", version.ref = "rsocketVersion" }
 
 spring-webflux = { module = "org.springframework.boot:spring-boot-starter-webflux"  }
 spring-data-r2dbc = { module = "org.springframework.boot:spring-boot-starter-data-r2dbc"}
@@ -37,10 +50,26 @@ koin-bom = { module = "io.insert-koin:koin-bom", version.ref = "koin-bom" }
 koin-core = { module = "io.insert-koin:koin-core" }
 koin-core-js = { module = "io.insert-koin:koin-core-js" }
 
+ktor-server-netty = { module = "io.ktor:ktor-server-netty", version.ref = "ktor" }
+ktor-server-html-builder-jvm = { module = "io.ktor:ktor-server-html-builder-jvm", version.ref = "ktor" }
 ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktor" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktor" }
+ktor-client-content-negotiation = { module = "io.ktor:ktor-client-content-negotiation", version.ref = "ktor" }
+ktor-serialization-kotlinx-json = {module="io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktor"}
+ktor-client-resources = { module = "io.ktor:ktor-client-resources", version.ref = "ktor" }
+
+ktor-client-js = { module = "io.ktor:ktor-client-js", version.ref = "ktor" }
+ktor-client-content-negotiation-js = { module = "io.ktor:ktor-client-content-negotiation-js", version.ref = "ktor" }
+ktor-serialization-kotlinx-json-js = {module="io.ktor:ktor-serialization-kotlinx-json-js", version.ref = "ktor"}
+ktor-client-resources-js = { module = "io.ktor:ktor-client-resources-js", version.ref = "ktor" }
+
 kotlinx-rpc-core = { module = "org.jetbrains.kotlinx:kotlinx-rpc-core", version.ref = "kotlinx-rpc" }
 kotlinx-rpc-krpc-ktor-client = { module = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-ktor-client", version.ref = "kotlinx-rpc" }
 kotlinx-rpc-krpc-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-rpc-krpc-serialization-json", version.ref = "kotlinx-rpc" }
+
+kaml = { module = "com.charleskorn.kaml:kaml", version = "0.73.0" }
+
+okio = {module = "com.squareup.okio:okio", version = "3.10.2"}
 
 # Libraries can be bundled together for easier import
 [bundles]

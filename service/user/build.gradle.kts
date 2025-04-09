@@ -15,5 +15,5 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-reactor")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
 
-    api(libs.rsocket.core)
+    implementation(libs.rsocket.core)
 }

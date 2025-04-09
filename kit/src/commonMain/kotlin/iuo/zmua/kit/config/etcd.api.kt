@@ -9,4 +9,10 @@ class EtcdApi() {
         @Resource("/range")
         class Range(val parent: KV = KV())
     }
+
+    @Resource("/auth")
+    class Auth(val parent: EtcdApi = EtcdApi()){
+        @Resource("/authenticate")
+        class Login(val parent: Auth = Auth())
+    }
 }
