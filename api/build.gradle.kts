@@ -11,7 +11,16 @@ repositories {
 }
 
 dependencies {
-    ksp(project(":kit"))
+    add("kspCommonMainMetadata", project(":kit"))
+    add("kspJvm", project(":kit"))
+//    add("kspJvmTest", project(":kit"))
+//    add("kspJs", project(":kit"))
+//    add("kspJsTest", project(":kit"))
+//    add("kspAndroidNativeX64", project(":kit"))
+//    add("kspAndroidNativeX64Test", project(":kit"))
+//    add("kspAndroidNativeArm64", project(":kit"))
+//    add("kspAndroidNativeArm64Test", project(":kit"))
+//    add("kspLinuxX64", project(":kit"))
 }
 
 kotlin {

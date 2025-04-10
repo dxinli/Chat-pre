@@ -7,10 +7,6 @@ import com.google.devtools.ksp.symbol.Modifier
 import com.squareup.kotlinpoet.*
 import java.nio.file.Path
 
-@Target(AnnotationTarget.CLASS)
-@Retention(AnnotationRetention.BINARY)
-annotation class RSocketApi(val path: String)
-
 class RSocketApiProcessorProvider : SymbolProcessorProvider {
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
         return RSocketApiProcessor(environment.logger)
