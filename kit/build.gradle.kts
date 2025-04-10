@@ -41,6 +41,10 @@ kotlin {
             implementation(libs.kaml)
             implementation(libs.okio)
         }
+        jvmMain.dependencies {
+            implementation(libs.kotlinpoet)
+            implementation(libs.symbol.processing.api)
+        }
         jsMain.dependencies {
             implementation(libs.ktor.client.js)
             implementation(libs.ktor.client.content.negotiation.js)

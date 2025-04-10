@@ -3,10 +3,15 @@ import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 plugins {
     kotlin("multiplatform")
     alias(libs.plugins.kotlinPluginSerialization)
+    alias(libs.plugins.ksp)
 }
 
 repositories {
     mavenCentral()
+}
+
+dependencies {
+    ksp(project(":kit"))
 }
 
 kotlin {
@@ -26,14 +31,14 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            api(project(":kit"))
-            api(libs.kotlinx.serialization.json)
-            api(libs.kotlinx.serialization.protobuf)
-            api(libs.rsocket.core)
+            implementation(project(":kit"))
+            implementation(libs.kotlinx.serialization.json)
+            implementation(libs.kotlinx.serialization.protobuf)
+            implementation(libs.rsocket.core)
         }
 
         jvmMain.dependencies {
-            api("org.springframework:spring-messaging:6.2.3")
+            implementation("org.springframework:spring-messaging:6.2.3")
         }
     }
 }
