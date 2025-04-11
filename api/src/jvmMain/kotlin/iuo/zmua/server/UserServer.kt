@@ -1,5 +1,7 @@
-package iuo.zmua.api
+package iuo.zmua.server
 
+import iuo.zmua.api.User
+import iuo.zmua.api.UserApi
 import org.springframework.messaging.rsocket.service.RSocketExchange
 
 @RSocketExchange("api.v1.user")

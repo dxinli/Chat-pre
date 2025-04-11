@@ -1,7 +1,7 @@
 package iuo.zmua.user.message
 
 import iuo.zmua.api.User
-import iuo.zmua.api.UserServer
+import iuo.zmua.server.UserServer
 import org.springframework.stereotype.Controller
 
 @Controller

@@ -4,23 +4,11 @@ plugins {
     kotlin("multiplatform")
     alias(libs.plugins.kotlinPluginSerialization)
     alias(libs.plugins.ksp)
+    idea
 }
 
 repositories {
     mavenCentral()
-}
-
-dependencies {
-    add("kspCommonMainMetadata", project(":kit"))
-    add("kspJvm", project(":kit"))
-//    add("kspJvmTest", project(":kit"))
-//    add("kspJs", project(":kit"))
-//    add("kspJsTest", project(":kit"))
-//    add("kspAndroidNativeX64", project(":kit"))
-//    add("kspAndroidNativeX64Test", project(":kit"))
-//    add("kspAndroidNativeArm64", project(":kit"))
-//    add("kspAndroidNativeArm64Test", project(":kit"))
-//    add("kspLinuxX64", project(":kit"))
 }
 
 kotlin {
@@ -50,4 +38,20 @@ kotlin {
             implementation("org.springframework:spring-messaging:6.2.3")
         }
     }
+}
+
+idea {
+    module {
+        // Not using += due to https://github.com/gradle/gradle/issues/8749
+        sourceDirs = sourceDirs + file("build/generated/ksp/jvm/jvmMain/kotlin") // or tasks["kspKotlin"].destination
+        generatedSourceDirs = generatedSourceDirs + file("build/generated/ksp/jvm/jvmMain/kotlin") + file("build/generated/ksp/jvm/jvmTest/kotlin")
+    }
+}
+
+// 该配置一定要在 kotlin 配置之后,需要配置kotlin target才有具体的配置
+dependencies {
+    add("kspCommonMainMetadata", project(":kit"))
+    add("kspJvm", project(":kit"))
+//    add("kspJs", project(":kit"))
+    // 或者直接使用 ksp(project(":kit")) 会全量配置，多平台影响性能
 }

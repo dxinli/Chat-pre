@@ -1,5 +1,7 @@
 package iuo.zmua.ksp
 
+import com.google.devtools.ksp.KspExperimental
+import com.google.devtools.ksp.isAbstract
 import com.google.devtools.ksp.processing.*
 import com.google.devtools.ksp.symbol.KSAnnotated
 import com.google.devtools.ksp.symbol.KSClassDeclaration
@@ -8,7 +10,11 @@ import com.squareup.kotlinpoet.*
 import java.nio.file.Path
 
 class RSocketApiProcessorProvider : SymbolProcessorProvider {
+    init {
+        println("RSocketApiProcessorProvider init")
+    }
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
+        println("RSocketApiProcessorProvider")
         return RSocketApiProcessor(environment.logger)
     }
 }
@@ -17,9 +23,12 @@ class RSocketApiProcessor(
     private val logger: KSPLogger
 ):SymbolProcessor{
 
+    @OptIn(KspExperimental::class)
     override fun process(resolver: Resolver): List<KSAnnotated> {
-        resolver.getSymbolsWithAnnotation("iuo.zmua.ksp.RSocketApi")
+        logger.info("processing RSocketApi")
+        resolver.getDeclarationsFromPackage("iuo.zmua.api")
             .filterIsInstance<KSClassDeclaration>()
+            .filter { it.isAbstract() && it.simpleName.asString().endsWith("Api")}
             .forEach { generateServerInterface(it) }
         return emptyList()
     }
@@ -32,16 +41,18 @@ class RSocketApiProcessor(
     }
 
     private fun generateServerInterface(apiInterface: KSClassDeclaration) {
-        val annotation = apiInterface.annotations
-            .first { it.shortName.asString() == "RSocketApi" }
-
-        val basePath = annotation.arguments
-            .first { it.name?.asString() == "path" }
-            .value.toString()
-        logger.info("basePath: $basePath")
-        val serverName = apiInterface.simpleName.asString()
-            .removeSuffix("Api") + "Server"
+        val serviceName = apiInterface.simpleName.asString()
+            .removeSuffix("Api")
+        val serverName = serviceName + "Server"
         logger.info("server name : $serverName")
+
+        val annotation = apiInterface.annotations
+            .firstOrNull { it.shortName.asString() == "RSocketApi" }
+
+        val basePath = annotation?.arguments
+            ?.first { it.name?.asString() == "path" }
+            ?.value?.toString() ?: serviceName.replaceFirstChar { it.lowercase() }
+        logger.info("basePath: $basePath")
 
         logger.info("type spec")
         val serverType = TypeSpec.interfaceBuilder(serverName)
@@ -53,15 +64,21 @@ class RSocketApiProcessor(
             .addSuperinterface(ClassName(apiInterface.packageName.asString(),apiInterface.simpleName.asString()))
 
         logger.info("func spec")
-        apiInterface.getAllFunctions().forEach { func ->
+        apiInterface.getAllFunctions().filter { func -> func.parentDeclaration == apiInterface }.forEach { func ->
+            val funcName = func.simpleName.asString()
+            val funcAnnotation = func.annotations
+               .firstOrNull { it.shortName.asString() == "RSocketApi" }
+            val path = funcAnnotation?.arguments?.first { it.name?.asString() == "path" }
+                ?.value?.toString()?:funcName
             serverType.addFunction(
-                FunSpec.builder(func.simpleName.asString())
+                FunSpec.builder(funcName)
                     .addAnnotation(
                         AnnotationSpec.builder(ClassNames.RSOCKET_EXCHANGE)
-                            .addMember("%S", func.simpleName.asString())
+                            .addMember("%S", path)
                             .build()
                     )
                     .addModifiers(KModifier.OVERRIDE)
+                    .addModifiers(KModifier.ABSTRACT)
                     .apply { if (Modifier.SUSPEND in func.modifiers) addModifiers(KModifier.SUSPEND) }
                     .returns(func.returnType?.resolve()?.let {
                         ClassName(
@@ -74,11 +91,14 @@ class RSocketApiProcessor(
         }
 
         logger.info("file spec and write")
-        FileSpec.builder(apiInterface.packageName.asString(), serverName)
+        val fileContent = FileSpec.builder("iuo.zmua.server", serverName)
             .addType(serverType.build())
-            .build()
-            .writeTo(Path.of("iuo.zmua.server"))
-
+            .build().apply {
+                logger.info("Generated code:\n${toString()}")
+                val outputDir = System.getProperty("user.dir") + "/src/jvmMain/kotlin"
+                val outputFile = Path.of(outputDir, "iuo/zmua/server/$serverName.kt")
+                writeTo(outputFile)
+            }
     }
 
 }
