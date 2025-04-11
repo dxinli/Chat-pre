@@ -15,11 +15,12 @@ class RSocketApiProcessorProvider : SymbolProcessorProvider {
     }
     override fun create(environment: SymbolProcessorEnvironment): SymbolProcessor {
         println("RSocketApiProcessorProvider")
-        return RSocketApiProcessor(environment.logger)
+        return RSocketApiProcessor(environment.codeGenerator,environment.logger)
     }
 }
 
 class RSocketApiProcessor(
+    private val codeGenerator: CodeGenerator,
     private val logger: KSPLogger
 ):SymbolProcessor{
 
@@ -91,13 +92,19 @@ class RSocketApiProcessor(
         }
 
         logger.info("file spec and write")
-        val fileContent = FileSpec.builder("iuo.zmua.server", serverName)
+        FileSpec.builder("iuo.zmua.server", serverName)
             .addType(serverType.build())
             .build().apply {
                 logger.info("Generated code:\n${toString()}")
-                val outputDir = System.getProperty("user.dir") + "/src/jvmMain/kotlin"
-                val outputFile = Path.of(outputDir, "iuo/zmua/server/$serverName.kt")
-                writeTo(outputFile)
+                codeGenerator.createNewFile(
+                    dependencies = Dependencies(false, apiInterface.containingFile!!),
+                    packageName = "iuo.zmua.server",
+                    fileName = serverName
+                ).use {
+                    it.bufferedWriter(Charsets.UTF_8).use {
+                        it.write(toString())
+                    }
+                }
             }
     }
 
