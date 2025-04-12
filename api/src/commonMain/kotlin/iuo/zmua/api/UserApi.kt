@@ -9,6 +9,14 @@ interface UserApi {
     suspend fun deleteMe()
 
     suspend fun all(): List<User>
+
+    suspend fun addUser(user: User)
+
+    suspend fun batchAddUser(users: List<User>)
+
+    suspend fun updateUser(user: User)
+
+    suspend fun getUser(userId: String): User?
 }
 
 @Serializable

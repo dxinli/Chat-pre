@@ -4,7 +4,7 @@ plugins {
     kotlin("multiplatform")
     alias(libs.plugins.kotlinPluginSerialization)
     alias(libs.plugins.ksp)
-    idea
+//    idea
 }
 
 repositories {
@@ -40,18 +40,18 @@ kotlin {
     }
 }
 
-idea {
-    module {
-        // Not using += due to https://github.com/gradle/gradle/issues/8749
-        sourceDirs = sourceDirs + file("build/generated/ksp/jvm/jvmMain/kotlin") // or tasks["kspKotlin"].destination
-        generatedSourceDirs = generatedSourceDirs + file("build/generated/ksp/jvm/jvmMain/kotlin") + file("build/generated/ksp/jvm/jvmTest/kotlin")
-    }
-}
+//idea {
+//    module {
+//        // Not using += due to https://github.com/gradle/gradle/issues/8749
+//        sourceDirs = sourceDirs + file("build/generated/ksp/jvm/jvmMain/kotlin") // or tasks["kspKotlin"].destination
+//        generatedSourceDirs = generatedSourceDirs + file("build/generated/ksp/jvm/jvmMain/kotlin") + file("build/generated/ksp/jvm/jvmTest/kotlin")
+//    }
+//}
 
-// 该配置一定要在 kotlin 配置之后,需要配置kotlin target才有具体的配置
+// 该配置一定要在 kotlin 配置之后,需要配置kotlin target才有具体的配置 下面两种配置都可以
 dependencies {
     add("kspCommonMainMetadata", project(":kit"))
-    add("kspJvm", project(":kit"))
+    "kspJvm"(project(":kit"))
 //    add("kspJs", project(":kit"))
     // 或者直接使用 ksp(project(":kit")) 会全量配置，多平台影响性能
 }

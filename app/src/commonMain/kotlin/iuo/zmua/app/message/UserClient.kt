@@ -22,4 +22,20 @@ class UserClient(private val api:ApiClient) : UserApi {
         return api.requestResponse<List<User>>("api.v1.user.deleteMe","yanghongzhong")
     }
 
+    override suspend fun addUser(user: User) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun batchAddUser(users: List<User>) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun updateUser(user: User) {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun getUser(userId: String): User? {
+        TODO("Not yet implemented")
+    }
+
 }

@@ -43,6 +43,7 @@ kotlin {
         }
         jvmMain.dependencies {
             implementation(libs.kotlinpoet)
+            implementation(libs.kotlinpoet.ksp)
             implementation(libs.symbol.processing.api)
         }
         jsMain.dependencies {
