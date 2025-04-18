@@ -10,16 +10,16 @@ class UserClient(private val api:ApiClient) : UserApi {
 
     override suspend fun getMe(): User {
         println("调用开始")
-        return api.requestResponse<User>("api.v1.user.deleteMe")
+        return api.requestResponse<User>("user.getMe")
     }
 
     override suspend fun deleteMe() {
-        api.fireAndForget("api.v1.user.deleteMe")
+        api.fireAndForget("user.deleteMe")
     }
 
     override suspend fun all(): List<User> {
         println("调用开始")
-        return api.requestResponse<List<User>>("api.v1.user.deleteMe","yanghongzhong")
+        return api.requestResponse<List<User>>("user.deleteMe","yanghongzhong")
     }
 
     override suspend fun addUser(user: User) {

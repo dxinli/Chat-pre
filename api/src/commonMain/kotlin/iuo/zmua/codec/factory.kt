@@ -9,8 +9,8 @@ import kotlinx.io.Buffer
 
 @OptIn(ExperimentalMetadataApi::class)
 fun Payload(route: String, data: Buffer = Buffer()): Payload = buildPayload {
-    data(Buffer())
+    data(data)
     compositeMetadata {
-        add(RoutingMetadata("api.v1.user.getMe"))
+        add(RoutingMetadata(route))
     }
 }

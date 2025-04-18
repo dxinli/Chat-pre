@@ -17,6 +17,7 @@ import iuo.zmua.kit.encoding.ConfiguredJson
 import iuo.zmua.kit.encoding.ConfiguredYaml
 import iuo.zmua.kit.http.GlobalClient
 import kotlinx.coroutines.*
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -44,9 +45,65 @@ class EtcdApi() {
     class Watch(val parent: EtcdApi = EtcdApi())
 }
 
-class EtcdClient(
-   internal var httpClient: HttpClient,
+data class EtcdConfig(
+    val username: String = "root",
+    val password: String = "sakura",
+    val host: String = "localhost",
+    val port: Int = 2379,
+    val ttl: Duration = 300.seconds,
 )
+
+
+class EtcdClient private constructor(
+    internal var httpClient: HttpClient,
+){
+
+    fun userName() = config.username
+
+    fun password() = config.password
+
+    companion object {
+
+        private var config = EtcdConfig()
+
+        private val etcdClientInstance:EtcdClient by lazy {
+            EtcdClient(GlobalClient.config {
+                install(WebSockets){
+                    pingIntervalMillis = 20_000
+                }
+                install(HttpTimeout) {
+                    requestTimeoutMillis = HttpTimeoutConfig.INFINITE_TIMEOUT_MS
+                    socketTimeoutMillis = HttpTimeoutConfig.INFINITE_TIMEOUT_MS
+                    connectTimeoutMillis = 5000
+                }
+                defaultRequest {
+                    url {
+                        this.host = config.host
+                        this.port = config.port
+                    }
+                    contentType(ContentType.Application.Json)
+                }
+            })
+        }
+
+        suspend fun create(config: EtcdConfig): EtcdClient {
+            this.config = config
+            val refreshJob = TokenManager.init(etcdClientInstance)
+            try {
+                TokenManager.initializationDeferred.await()
+            } catch (e: Exception) {
+                // 处理初始化失败（如重试或终止）
+                refreshJob?.cancel()
+                throw Exception("TokenManager init fail", e)
+            }
+            if (refreshJob?.isActive != true) {
+                throw Exception("TokenManager refresh job not active")
+            }
+            return etcdClientInstance
+        }
+
+    }
+}
 
 object TokenManager  {
     private var currentToken: String? = null
@@ -54,12 +111,11 @@ object TokenManager  {
     private val mutex = Mutex()
     private var refreshJob: Job? = null
     private lateinit var etcdClient: EtcdClient
-    private var username = "root"
-    private var password = "sakura"
+    internal val initializationDeferred = CompletableDeferred<Unit>()  // 新增：初始化完成标记
 
     @OptIn(ExperimentalTime::class)
     private suspend fun fetchNewToken() {
-        currentToken = etcdClient.auth(username, password)
+        currentToken = etcdClient.auth(etcdClient.userName(), etcdClient.password())
         // 使用固定 TTL（根据 etcd 服务端默认配置）
         val ttl = 300L  // 默认 300 秒（5 分钟）
         expiryTime = (Clock.System.now()+ttl.seconds).toEpochMilliseconds()
@@ -75,51 +131,36 @@ object TokenManager  {
     }
 
     @OptIn(ExperimentalTime::class)
-    suspend fun init(etcdClient: EtcdClient,username: String,password: String) = mutex.withLock {
-        this.etcdClient = etcdClient
-        this.username = username
-        this.password = password
-        if (refreshJob == null) {
-            refreshJob = CoroutineScope(Dispatchers.Unconfined).launch {
-                while (true) {
-                    delay(30.seconds)
-                    if (Clock.System.now().toEpochMilliseconds() >= expiryTime - 30_000) {
-                        fetchNewToken()
+    suspend fun init(etcdClient: EtcdClient):Job? {
+        mutex.withLock {
+            this.etcdClient = etcdClient
+            if (refreshJob == null) {
+                println("create refresh token job")
+                refreshJob = CoroutineScope(SupervisorJob() + Dispatchers.Default + CoroutineExceptionHandler { _, e ->
+                    initializationDeferred.completeExceptionally(e)
+                }).launch {
+                    try {
+                        fetchNewToken() // 首次 Token 获取
+                        initializationDeferred.complete(Unit)  // 标记初始化完成
+                        while (isActive) {
+                            delay(30.seconds)
+                            if (Clock.System.now().toEpochMilliseconds() >= expiryTime - 30_000) {
+                                fetchNewToken()
+                            }
+                        }
+                    }catch (e:CancellationException){
+                        println("refresh token job cancelled")
+                    }catch (e: Exception) {
+                        println("refresh token  error: ${e.message}")
+                        throw e
                     }
                 }
-            }
-        }
-        fetchNewToken()
-    }
-}
 
-// 修改单例获取方式为延迟初始化
-val etcdClientInstance by lazy {
-    CoroutineScope(Dispatchers.Default).async {
-        etcdClient() // 异步初始化
-    }
-}
-
-private suspend fun etcdClient(): EtcdClient {
-    val etcdClient = EtcdClient(GlobalClient.config {
-        install(WebSockets){
-            pingIntervalMillis = 20_000
-        }
-        install(HttpTimeout) {
-            requestTimeoutMillis = HttpTimeoutConfig.INFINITE_TIMEOUT_MS
-            socketTimeoutMillis = HttpTimeoutConfig.INFINITE_TIMEOUT_MS
-            connectTimeoutMillis = 5000
-        }
-        defaultRequest {
-            url {
-                host = "localhost"
-                port = 2379
             }
-            contentType(ContentType.Application.Json)
+            println("init finished")
+            return refreshJob
         }
-    })
-    TokenManager.init(etcdClient,"root","sakura")
-    return etcdClient
+    }
 }
 
 @OptIn(ExperimentalSerializationApi::class)
@@ -230,7 +271,7 @@ suspend fun EtcdClient.watchWebSocket(
 @OptIn(ExperimentalEncodingApi::class, ExperimentalSerializationApi::class)
 suspend fun EtcdClient.watch(
     keyStr: String,
-    onUpdate: (Buffer) -> Unit
+    onUpdate: (Buffer) -> Unit,
 ) {
     println("etcd config watch")
     val token = TokenManager.getToken()

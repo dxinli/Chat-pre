@@ -4,6 +4,7 @@ import io.rsocket.kotlin.ExperimentalMetadataApi
 import io.rsocket.kotlin.core.WellKnownMimeType
 import io.rsocket.kotlin.metadata.CompositeMetadata
 import kotlinx.io.Buffer
+import kotlinx.io.write
 import org.springframework.boot.rsocket.messaging.RSocketStrategiesCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -52,14 +53,15 @@ class RSocketConfig {
                                 val len: Int = dataBuffer.readableByteCount()
                                 val byteBuffer = ByteBuffer.allocate(len)
                                 dataBuffer.toByteBuffer(byteBuffer)
-                                val byteArray = ByteArray(byteBuffer.remaining()).apply {
-                                    byteBuffer.get(this)
-                                }
+//                                val byteArray = ByteArray(byteBuffer.remaining()).apply {
+//                                    byteBuffer.get(this)
+//                                }
                                 DataBufferUtils.release(dataBuffer)
-                                Buffer().apply {
-                                    write(byteArray)
-                                    return read()
+                                val buffer = Buffer().apply {
+//                                    write(byteArray)
+                                    write(byteBuffer)
                                 }
+                                return buffer.read()
                             }
                         }
                     })

@@ -10,8 +10,9 @@ import io.rsocket.kotlin.payload.buildPayload
 import io.rsocket.kotlin.payload.data
 import iuo.zmua.kit.config.RSocketConfig
 import iuo.zmua.codec.Codec
+import iuo.zmua.kit.config.EtcdClient
+import iuo.zmua.kit.config.EtcdConfig
 import iuo.zmua.kit.config.configLoadAndWatch
-import iuo.zmua.kit.config.etcdClientInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -42,7 +43,7 @@ private suspend fun createRSocket(config: RSocketConfig) = buildHttpClient(confi
 )
 
 suspend fun apiClient():ApiClient {
-    val etcdClient = etcdClientInstance.await()
+    val etcdClient = EtcdClient.create(EtcdConfig())
     var apiClient:ApiClient?=null
     val config:RSocketConfig = etcdClient.configLoadAndWatch<RSocketConfig>("rSocket") { newConfig ->
         apiClient?.onConfigUpdate(newConfig)
