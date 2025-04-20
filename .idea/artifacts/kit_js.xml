@@ -1,8 +1,6 @@
 <component name="ArtifactManager">
   <artifact type="jar" name="kit-js">
     <output-path>$PROJECT_DIR$/kit/build/libs</output-path>
-    <root id="archive" name="kit-js.jar">
-      <element id="module-output" name="Chat-pre.kit.jsMain" />
-    </root>
+    <root id="archive" name="kit-js.jar" />
   </artifact>
 </component>
