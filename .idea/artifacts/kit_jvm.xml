@@ -1,6 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="kit-jvm">
-    <output-path>$PROJECT_DIR$/kit/build/libs</output-path>
-    <root id="archive" name="kit-jvm.jar" />
-  </artifact>
-</component>
