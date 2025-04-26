@@ -53,4 +53,19 @@ class EtcdTest{
         val token = TokenManager.getToken()
         println("token: $token")
     }
+
+    @Test
+    fun `test yaml`(){
+        val config = ConfiguredYaml.decodeFromString<RSocketConfig>("""
+transportType: WS
+target:
+    host: localhost
+    port: 8087
+    path: /rsocket
+connector:
+    dataMimeType: ApplicationProtoBuf
+    metadataMimeType: MessageRSocketCompositeMetadata
+        """)
+        println("config: $config")
+    }
 }

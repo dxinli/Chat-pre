@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: demoService
+
+
+  rsocket:
+    server:
+      transport: websocket
+      mapping-path: /rsocket
+      port: 8088
+
+  cloud:
+    consul:
+      discovery:
+        instance-id: ${spring.application.name}:${random.value}
+        service-name: ${spring.application.name}
+        health-check-path: /actuator/health
+        health-check-interval: 15s
+        prefer-ip-address: true
+        enabled: true
+        metadata:
+          rsocketPort: ${spring.rsocket.server.port}
+        tags:
+          - iuo.zmua.user.message.DemoMessage

@@ -34,3 +34,5 @@ include("api")
 include("app")
 include("service:user")
 findProject(":service:user")?.name = "user"
+
+include("service:demo")

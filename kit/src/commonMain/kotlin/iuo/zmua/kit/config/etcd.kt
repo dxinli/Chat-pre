@@ -21,6 +21,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.*
 import kotlin.io.encoding.Base64
 import kotlin.io.encoding.ExperimentalEncodingApi
@@ -198,6 +199,7 @@ suspend fun EtcdClient.configLoad(keyStr: String):Buffer{
             val value = jsonElement.jsonArray[0].jsonObject["value"]?.jsonPrimitive?.content
             value?.let {
                 val base64 = Base64.decode(it)
+                println("etcd config load ok,value:${Buffer().write(base64).readByteString().utf8()}")
                 return Buffer().write(base64)
             }
         }
@@ -214,7 +216,9 @@ suspend inline fun <reified T> EtcdClient.configLoadAndWatch(keyStr: String, cro
     CoroutineScope(Dispatchers.Default).launch {
         watch(keyStr) { rawValue ->
             try {
-                val newConfig = ConfiguredYaml.decodeFromSource<T>(rawValue)
+                val rawConfig = rawValue.readByteString().utf8()
+                val newConfig = ConfiguredYaml.decodeFromString<T>(rawConfig)
+                println("etcd config reload:new config:\n${newConfig}")
                 onUpdate(newConfig)
             } catch (e: Exception) {
                 println("Failed to reload config: ${e.message}")

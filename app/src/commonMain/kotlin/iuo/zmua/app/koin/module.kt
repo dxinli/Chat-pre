@@ -9,7 +9,7 @@ import org.koin.dsl.module
 suspend fun setUp(vararg modules: Module) {
     val apiClient = apiClient()
 
-    val koinApp = startKoin {
+    startKoin {
         printLogger() // 添加 Koin 日志打印
         modules(module {
             single { apiClient }

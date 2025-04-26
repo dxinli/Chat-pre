@@ -53,12 +53,8 @@ class RSocketConfig {
                                 val len: Int = dataBuffer.readableByteCount()
                                 val byteBuffer = ByteBuffer.allocate(len)
                                 dataBuffer.toByteBuffer(byteBuffer)
-//                                val byteArray = ByteArray(byteBuffer.remaining()).apply {
-//                                    byteBuffer.get(this)
-//                                }
                                 DataBufferUtils.release(dataBuffer)
                                 val buffer = Buffer().apply {
-//                                    write(byteArray)
                                     write(byteBuffer)
                                 }
                                 return buffer.read()

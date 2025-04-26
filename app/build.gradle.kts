@@ -13,6 +13,7 @@ kotlin {
         withJava()
     }
     js("web") {
+        nodejs()
         binaries.executable()
         browser {
             commonWebpackConfig {
