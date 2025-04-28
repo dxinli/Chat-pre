@@ -12,8 +12,7 @@ kotlin {
     jvm {
         withJava()
     }
-    js("web") {
-        nodejs()
+    js("web",IR) {
         binaries.executable()
         browser {
             commonWebpackConfig {
@@ -60,6 +59,7 @@ kotlin {
                 implementation(libs.kotlin.redux)
                 implementation(libs.kotlin.react.redux)
                 implementation(libs.koin.core.js)
+                implementation(npm("react-player", "2.12.0"))
             }
         }
         val webTest by getting

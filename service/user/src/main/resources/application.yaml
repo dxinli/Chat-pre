@@ -26,8 +26,12 @@ spring:
   rsocket:
     server:
       transport: websocket
+      # 只在websocket模式下生效，且该配置是针对websocket over http端口的path，
+      # 如果将rsocket配置为独立的Websocket 服务器(配置rsocket.server.port)，
+      # 那么就会监听多个路径,独立的Websocket服务器监听为/**
       mapping-path: /rsocket
-      port: 8087
+      #  port: 8087  #
+
 
   cloud:
     consul:

@@ -2,10 +2,11 @@ package iuo.zmua.user.message
 
 import iuo.zmua.api.User
 import iuo.zmua.server.UserServer
+import org.springframework.boot.autoconfigure.rsocket.RSocketProperties
 import org.springframework.stereotype.Controller
 
 @Controller
-class UserMessage : UserServer {
+class UserMessage(val properties: RSocketProperties) : UserServer {
 
     override suspend fun getMe(): User {
         val user = User(1, "yangqiyu")

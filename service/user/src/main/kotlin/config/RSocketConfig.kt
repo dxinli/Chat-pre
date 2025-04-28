@@ -66,12 +66,14 @@ class RSocketConfig {
                     registry.metadataToExtract<CompositeMetadata>(MimeType.valueOf(WellKnownMimeType.MessageRSocketCompositeMetadata.toString())){
                             compositeMetadata: CompositeMetadata, mutableMap: MutableMap<String, Any> ->
                         compositeMetadata.entries.forEach { entry ->
+                            val content = entry.content.readByte().toString()
                             when (entry.mimeType) {
                                 WellKnownMimeType.MessageRSocketRouting -> {
-                                    mutableMap["route"] = entry.content.readByte().toString()
+                                    println("route: $content")
+                                    mutableMap["route"] = content
                                 }
                                 else -> {
-                                    mutableMap[entry.mimeType.toString()] = entry.content.readByte().toString()
+                                    mutableMap[entry.mimeType.toString()] = content
                                 }
                             }
                         }

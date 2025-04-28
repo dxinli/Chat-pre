@@ -1,3 +1,4 @@
+import component.App
 import iuo.zmua.app.koin.setUp
 import kotlinx.browser.document
 import kotlinx.coroutines.*
@@ -14,7 +15,7 @@ fun main() {
         setUpCompleted.send(Unit) // 设置完成后发送信号
     }
     AppScope.launch {
-        val container = document.createElement("div")
+        val container = document.getElementById("root") ?: error("Couldn't find root container!")
         document.body!!.appendChild(container)
         println("wait setup koin module completed")
         setUpCompleted.receive() // 等待设置完成
@@ -22,6 +23,6 @@ fun main() {
         val welcome = Welcome.create {
             name = "Kotlin/JS"
         }
-        createRoot(container).render(welcome)
+        createRoot(container).render(App.create())
     }
 }
