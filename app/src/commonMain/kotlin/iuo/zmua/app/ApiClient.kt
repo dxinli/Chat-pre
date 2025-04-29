@@ -2,6 +2,7 @@ package iuo.zmua.app
 
 import io.rsocket.kotlin.RSocket
 import io.rsocket.kotlin.core.RSocketConnector
+import io.rsocket.kotlin.payload.Payload
 import io.rsocket.kotlin.payload.PayloadMimeType
 import io.rsocket.kotlin.payload.buildPayload
 import io.rsocket.kotlin.payload.data
@@ -16,7 +17,9 @@ import iuo.zmua.kit.config.configLoadAndWatch
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
+import kotlin.coroutines.CoroutineContext
 import kotlin.coroutines.coroutineContext
 
 private fun createConnector(config: RSocketConnectorConfig) = RSocketConnector {
@@ -39,7 +42,31 @@ private suspend fun rSocket(config: RSocketConfig): RSocket{
     val target = createTarget(config.target)
     println("connect to target: ${config.target}")
 
-    return connector.connect(target)
+    return try {
+        connector.connect(target)
+    } catch (e: Exception) {
+        // 降级处理，调用时抛出异常服务不可用
+        object : RSocket {
+            override val coroutineContext: CoroutineContext
+                get() = target.coroutineContext
+
+            override suspend fun requestResponse(payload: Payload): Payload {
+                throw Exception("Service is unavailable")
+            }
+
+            override suspend fun fireAndForget(payload: Payload) {
+                throw Exception("Service is unavailable")
+            }
+
+            override fun requestStream(payload: Payload): Flow<Payload> {
+                throw Exception("Service is unavailable")
+            }
+
+            override fun requestChannel(initPayload: Payload, payloads: Flow<Payload>): Flow<Payload> {
+                throw Exception("Service is unavailable")
+            }
+        }
+    }
 }
 
 suspend fun apiClient():ApiClient {
@@ -70,6 +97,5 @@ class ApiClient internal constructor(
         }
     }
 }
-
 
 

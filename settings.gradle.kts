@@ -36,3 +36,4 @@ include("service:user")
 findProject(":service:user")?.name = "user"
 
 include("service:demo")
+include("agentNotebook")

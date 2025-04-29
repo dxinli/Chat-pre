@@ -60,6 +60,14 @@ kotlin {
                 implementation(libs.kotlin.react.redux)
                 implementation(libs.koin.core.js)
                 implementation(npm("react-player", "2.12.0"))
+                implementation(npm("react-share", "4.4.1"))
+
+                implementation(npm("@mui/material", "^5.14.20"))
+                implementation(npm("@mui/icons-material", "^5.14.20"))
+                implementation(npm("@emotion/react", "^11.11.1"))
+                implementation(npm("@emotion/styled", "^11.11.0"))
+                implementation(npm("@mui/system", "^5.14.20"))
+
             }
         }
         val webTest by getting
