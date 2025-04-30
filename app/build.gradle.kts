@@ -16,6 +16,7 @@ kotlin {
         binaries.executable()
         browser {
             commonWebpackConfig {
+                outputFileName = "index.js"
                 cssSupport {
                     enabled.set(true)
                 }
@@ -52,21 +53,20 @@ kotlin {
         }
         val webMain by getting {
             dependencies {
-                implementation(libs.kotlin.react)
-                implementation(libs.kotlin.react.dom)
-                implementation(libs.kotlin.emotion)
-                implementation(libs.kotlin.react.router.dom)
+                implementation(kotlinWrappers.react)
+                implementation(kotlinWrappers.reactCore)
+                implementation(kotlinWrappers.reactDom)
+                implementation(kotlinWrappers.reactRouter)
+
+                implementation(kotlinWrappers.emotion)
+                implementation(kotlinWrappers.mui.material)
+                implementation(kotlinWrappers.mui.iconsMaterial)
+                implementation(kotlinWrappers.muix.datePickers)
                 implementation(libs.kotlin.redux)
                 implementation(libs.kotlin.react.redux)
                 implementation(libs.koin.core.js)
                 implementation(npm("react-player", "2.12.0"))
                 implementation(npm("react-share", "4.4.1"))
-
-                implementation(npm("@mui/material", "^5.14.20"))
-                implementation(npm("@mui/icons-material", "^5.14.20"))
-                implementation(npm("@emotion/react", "^11.11.1"))
-                implementation(npm("@emotion/styled", "^11.11.0"))
-                implementation(npm("@mui/system", "^5.14.20"))
 
             }
         }

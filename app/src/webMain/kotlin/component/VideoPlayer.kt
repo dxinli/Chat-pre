@@ -8,6 +8,10 @@ import model.Video
 import react.dom.html.ReactHTML.button
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.h3
+import web.cssom.Display
+import web.cssom.NamedColor
+import web.cssom.Position
+import web.cssom.px
 
 external interface VideoPlayerProps : Props {
     var video: Video

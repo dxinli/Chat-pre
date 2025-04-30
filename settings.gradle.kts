@@ -10,6 +10,13 @@ dependencyResolutionManagement {
 //        maven { url = uri("https://maven.aliyun.com/repository/public") }
         mavenCentral()
     }
+
+    versionCatalogs {
+        create("kotlinWrappers") {
+            val wrappersVersion = extra["kotlin.wrappers.version"] as String
+            from("org.jetbrains.kotlin-wrappers:kotlin-wrappers-catalog:$wrappersVersion")
+        }
+    }
 }
 
 pluginManagement {

@@ -1,6 +1,5 @@
 package component
 
-import Welcome
 import kotlinx.coroutines.MainScope
 import model.Video
 import react.FC
@@ -64,5 +63,4 @@ val App = FC<Props> {
             }
         }
     }
-    Welcome()
 }

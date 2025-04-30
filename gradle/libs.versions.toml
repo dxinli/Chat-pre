@@ -40,6 +40,9 @@ kotlin-emotion = { module = "org.jetbrains.kotlin-wrappers:kotlin-emotion", vers
 kotlin-react-router-dom = { module = "org.jetbrains.kotlin-wrappers:kotlin-react-router-dom", version = "6.3.0-pre.346" }
 kotlin-redux = { module = "org.jetbrains.kotlin-wrappers:kotlin-redux", version = "4.1.2-pre.346" }
 kotlin-react-redux = { module = "org.jetbrains.kotlin-wrappers:kotlin-react-redux", version = "7.2.6-pre.346" }
+kotlin-mui = { group = "org.jetbrains.kotlin-wrappers", name = "kotlin-mui", version.ref = "react" }
+kotlin-mui-icons = { group = "org.jetbrains.kotlin-wrappers", name = "kotlin-mui-icons", version.ref = "react" }
+kotlin-mui-system = { group = "org.jetbrains.kotlin-wrappers", name = "kotlin-mui-system", version.ref = "react" }
 
 rsocket-core = { module = "io.rsocket.kotlin:rsocket-core", version.ref = "rsocketVersion" }
 ktor-client-rsocket = { module = "io.rsocket.kotlin:ktor-client-rsocket", version.ref = "rsocketVersion" }

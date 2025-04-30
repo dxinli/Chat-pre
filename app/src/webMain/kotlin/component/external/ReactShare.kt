@@ -1,7 +1,5 @@
 package component.external
 
-import react.ComponentClass
-
 @JsName("EmailIcon")
 external val EmailIcon: ComponentClass<IconProps>
 
