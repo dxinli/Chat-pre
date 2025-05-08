@@ -1,6 +1,6 @@
-package io.github.aerialist7.showcase.material.utils
+package showcase.material.utils
 
-import io.github.aerialist7.xs
+import xs
 import mui.material.*
 import mui.material.GridDirection.Companion.column
 import mui.system.responsive

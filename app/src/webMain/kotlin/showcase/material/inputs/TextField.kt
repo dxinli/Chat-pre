@@ -1,8 +1,8 @@
-package io.github.aerialist7.showcase.material.inputs
+package showcase.material.inputs
 
-import io.github.aerialist7.InputProps
-import io.github.aerialist7.autoComplete
-import io.github.aerialist7.noValidate
+import InputProps
+import autoComplete
+import noValidate
 import js.objects.jso
 import mui.material.*
 import mui.material.DividerVariant.Companion.fullWidth

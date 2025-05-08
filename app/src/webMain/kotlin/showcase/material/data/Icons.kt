@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.data
+package showcase.material.data
 
 import react.FC
 import react.Props

@@ -1,4 +1,10 @@
+@file:JsModule("react-share")
+@file:JsNonModule
+
 package component.external
+
+import react.ComponentClass
+import react.Props
 
 @JsName("EmailIcon")
 external val EmailIcon: ComponentClass<IconProps>
@@ -11,3 +17,12 @@ external val TelegramIcon: ComponentClass<IconProps>
 
 @JsName("TelegramShareButton")
 external val TelegramShareButton: ComponentClass<ShareButtonProps>
+
+external interface ShareButtonProps : Props {
+    var url: String
+}
+
+external interface IconProps : Props {
+    var size: Int
+    var round: Boolean
+}

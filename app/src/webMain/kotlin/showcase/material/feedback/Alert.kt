@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.feedback
+package showcase.material.feedback
 
 import mui.material.Alert
 import mui.material.AlertColor

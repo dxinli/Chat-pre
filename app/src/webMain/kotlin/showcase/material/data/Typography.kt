@@ -1,6 +1,6 @@
-package io.github.aerialist7.showcase.material.data
+package showcase.material.data
 
-import io.github.aerialist7.display
+import display
 import mui.material.Box
 import mui.material.Typography
 import mui.material.styles.TypographyVariant

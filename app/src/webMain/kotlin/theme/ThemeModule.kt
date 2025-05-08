@@ -1,5 +1,7 @@
-package io.github.aerialist7.theme
+package theme
 
+import theme.ThemeContext
+import theme.Themes
 import mui.material.CssBaseline
 import mui.material.styles.ThemeProvider
 import react.FC

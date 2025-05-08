@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.muix
+package showcase.material.muix
 
 import react.FC
 import react.Props

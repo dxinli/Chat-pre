@@ -1,4 +1,4 @@
-package io.github.aerialist7.theme
+package theme
 
 import js.objects.jso
 import mui.material.PaletteMode

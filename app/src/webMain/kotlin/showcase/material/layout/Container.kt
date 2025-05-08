@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.layout
+package showcase.material.layout
 
 import mui.material.Box
 import mui.material.Container

@@ -1,7 +1,8 @@
-package io.github.aerialist7.page
+package page
 
 import mui.system.Box
 import mui.system.sx
+import page.Sidebar
 import react.FC
 import web.cssom.*
 

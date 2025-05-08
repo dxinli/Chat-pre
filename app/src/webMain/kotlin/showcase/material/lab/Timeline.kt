@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.lab
+package showcase.material.lab
 
 import react.FC
 import react.Props

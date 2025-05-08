@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase
+package showcase
 
 import react.FC
 import react.Props

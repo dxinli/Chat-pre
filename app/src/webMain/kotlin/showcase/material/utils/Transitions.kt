@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.utils
+package showcase.material.utils
 
 import mui.material.Box
 import mui.material.Fade

@@ -1,4 +1,4 @@
-package io.github.aerialist7.router
+package router
 
 import react.router.useLocation
 

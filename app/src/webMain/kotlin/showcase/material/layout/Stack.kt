@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.layout
+package showcase.material.layout
 
 import emotion.styled.styled
 import mui.material.Box

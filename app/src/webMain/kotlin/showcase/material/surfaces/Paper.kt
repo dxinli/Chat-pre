@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.surfaces
+package showcase.material.surfaces
 
 import mui.material.Box
 import mui.material.Paper

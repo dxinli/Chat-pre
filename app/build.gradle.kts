@@ -12,7 +12,8 @@ kotlin {
     jvm {
         withJava()
     }
-    js("web",IR) {
+    // js("web",IR) IR 编译器通过 gradle.properties 中指定
+    js("web") {
         binaries.executable()
         browser {
             commonWebpackConfig {
@@ -54,17 +55,33 @@ kotlin {
         val webMain by getting {
             dependencies {
                 implementation(kotlinWrappers.react)
-                implementation(kotlinWrappers.reactCore)
                 implementation(kotlinWrappers.reactDom)
                 implementation(kotlinWrappers.reactRouter)
+                implementation(kotlinWrappers.reactCore)
+                implementation(kotlinWrappers.reactLegacy)
 
-                implementation(kotlinWrappers.emotion)
+                implementation(kotlinWrappers.emotion.css)
+                implementation(kotlinWrappers.emotion.react)
+                implementation(kotlinWrappers.emotion.styled)
+
                 implementation(kotlinWrappers.mui.material)
                 implementation(kotlinWrappers.mui.iconsMaterial)
                 implementation(kotlinWrappers.muix.datePickers)
                 implementation(libs.kotlin.redux)
                 implementation(libs.kotlin.react.redux)
                 implementation(libs.koin.core.js)
+
+                implementation(npm("date-fns", "2.30.0"))
+                implementation(npm("@date-io/date-fns", "2.17.0"))
+
+//                // React，React DOM + 包装器
+//                implementation(project.dependencies.enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:1.0.0-pre.430"))
+//                implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
+//                implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
+//
+//                // Kotlin React 情感（CSS）
+//                implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")
+
                 implementation(npm("react-player", "2.12.0"))
                 implementation(npm("react-share", "4.4.1"))
 

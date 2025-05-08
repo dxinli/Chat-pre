@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.navigation
+package showcase.material.navigation
 
 import mui.material.Link
 import mui.material.LinkUnderline

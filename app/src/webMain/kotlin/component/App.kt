@@ -44,6 +44,7 @@ val App = FC<Props> {
             videos = watchedVideos
             selectedVideo = currentVideo
             onSelectVideo = { video ->
+                println("selectedVideo: $video")
                 currentVideo = video
             }
         }

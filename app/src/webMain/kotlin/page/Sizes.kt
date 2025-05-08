@@ -1,4 +1,4 @@
-package io.github.aerialist7.page
+package page
 
 import web.cssom.px
 

@@ -1,13 +1,17 @@
 package component
 
-import component.external.*
-import csstype.*
 import react.*
-import emotion.react.css
-import model.Video
-import react.dom.html.ReactHTML.button
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.h3
+import react.dom.html.ReactHTML.button
+import component.external.EmailShareButton
+import component.external.EmailIcon
+import component.external.TelegramShareButton
+import component.external.TelegramIcon
+import component.external.ReactPlayer
+import emotion.react.css
+import model.Video
+import mui.material.iconClasses
 import web.cssom.Display
 import web.cssom.NamedColor
 import web.cssom.Position
@@ -45,14 +49,14 @@ val VideoPlayer = FC<VideoPlayerProps> { props ->
         }
         EmailShareButton {
             url = props.video.videoUrl
-            EmailIcon {
+            EmailIcon.create {  // 显式创建组件
                 size = 32
                 round = true
             }
         }
         TelegramShareButton {
             url = props.video.videoUrl
-            TelegramIcon {
+            TelegramIcon.create {
                 size = 32
                 round = true
             }

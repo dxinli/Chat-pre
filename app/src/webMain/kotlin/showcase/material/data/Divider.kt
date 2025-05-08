@@ -1,6 +1,6 @@
-package io.github.aerialist7.showcase.material.data
+package showcase.material.data
 
-import io.github.aerialist7.button
+import button
 import mui.material.Divider
 import mui.material.List
 import mui.material.ListItem

@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.inputs
+package showcase.material.inputs
 
 import mui.material.Switch
 import react.FC

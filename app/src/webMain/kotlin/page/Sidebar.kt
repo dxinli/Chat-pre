@@ -1,8 +1,8 @@
-package io.github.aerialist7.page
+package page
 
 import emotion.styled.styled
-import io.github.aerialist7.router.useShowcaseIdParam
-import io.github.aerialist7.showcase.Showcase
+import router.useShowcaseIdParam
+import showcase.Showcase
 import js.array.ReadonlyArray
 import js.uri.decodeURIComponent
 import js.uri.encodeURIComponent

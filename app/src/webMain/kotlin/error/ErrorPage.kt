@@ -1,4 +1,4 @@
-package io.github.aerialist7.error
+package error
 
 import js.errors.JsError
 import mui.material.Typography

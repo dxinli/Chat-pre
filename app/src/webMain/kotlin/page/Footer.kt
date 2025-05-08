@@ -1,4 +1,4 @@
-package io.github.aerialist7.page
+package page
 
 import mui.material.BottomNavigation
 import mui.material.BottomNavigationAction

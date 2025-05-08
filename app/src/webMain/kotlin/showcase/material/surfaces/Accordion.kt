@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.surfaces
+package showcase.material.surfaces
 
 import mui.icons.material.ExpandMore
 import mui.material.Accordion

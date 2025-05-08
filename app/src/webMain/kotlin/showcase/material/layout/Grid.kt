@@ -1,7 +1,7 @@
-package io.github.aerialist7.showcase.material.layout
+package showcase.material.layout
 
 import emotion.styled.styled
-import io.github.aerialist7.xs
+import xs
 import mui.material.Grid
 import mui.material.PaletteMode
 import mui.material.Paper

@@ -1,9 +1,9 @@
-package io.github.aerialist7.page
+package page
 
-import io.github.aerialist7.router.useShowcaseIdParam
-import io.github.aerialist7.theme.Themes
-import io.github.aerialist7.theme.useSetTheme
-import io.github.aerialist7.theme.useTheme
+import router.useShowcaseIdParam
+import theme.Themes
+import theme.useSetTheme
+import theme.useTheme
 import js.uri.decodeURIComponent
 import mui.icons.material.Brightness4
 import mui.icons.material.Brightness7

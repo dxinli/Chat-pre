@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.data
+package showcase.material.data
 
 import mui.material.Avatar
 import mui.material.AvatarGroup

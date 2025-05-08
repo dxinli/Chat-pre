@@ -1,4 +1,4 @@
-package io.github.aerialist7.showcase.material.feedback
+package showcase.material.feedback
 
 import mui.material.Skeleton
 import mui.material.SkeletonVariant.Companion.circular
